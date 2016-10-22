@@ -1,0 +1,4 @@
+app.yaml filter=git-crypt diff=git-crypt
+app-dev.yaml filter=git-crypt diff=git-crypt
+/keys/* filter=git-crypt diff=git-crypt
+.gitattributes !filter !diff

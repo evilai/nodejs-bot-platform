@@ -1,0 +1,29 @@
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+npm-debug*
+
+# OS generated files #
+######################
+.DS_Store?
+.DS_Store
+Icon?
+
+# NPM Installed stuff #
+#######################
+
+**/node_modules/
+__
+/.idea/
+.sass-cache
+lib
+dist
+lib
+/dump.rdb
+**/*.map
+*.gypi
+
+#      Crypt files    #
+#######################

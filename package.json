@@ -1,0 +1,53 @@
+{
+  "name": "bot",
+  "version": "0.0.1",
+  "description": "Node.js Bot platform. Boilerplate, start point, tools, best practices for building bots.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build:dev": "webpack",
+    "build:dev:watch": "webpack --watch",
+    "start:dev": "./tools/start/dev.sh",
+    "start": "./tools/start/prod.sh",
+    "test": "mocha"
+  },
+  "author": "Maxim Vetrenko <vetrenko.maxim@gmail.com> (https://github.com/maxmert)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.3.21",
+    "babel-eslint": "^5.0.4",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-transform-runtime": "^6.3.13",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
+    "eslint": "^3.5.0",
+    "eslint-config-evilai": "^0.0.1",
+    "eslint-import-resolver-webpack": "^0.6.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "mocha": "^3.1.2",
+    "source-map-support": "^0.4.3",
+    "webpack": "^1.8.4",
+    "webpack-dev-server": "^1.8.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "co": "^4.6.0",
+    "express": "^4.14.0",
+    "finity": "^0.4.5",
+    "lodash": "^4.16.4",
+    "nbp-locales": "0.0.2",
+    "nbp-adapter-google-datastore": "0.0.1",
+    "nbp-adapter-google-natural-language": "0.0.1",
+    "nbp-adapter-memcached": "0.0.1",
+    "nbp-adapter-wit": "0.0.1",
+    "nbp-logger": "0.0.1",
+    "nbp-adapter-fb-messenger": "0.0.1",
+    "nbp-rules": "0.0.1",
+    "nbp-skills-cluster": "0.0.1",
+    "newrelic": "^1.32.0"
+  }
+}

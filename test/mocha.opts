@@ -1,0 +1,7 @@
+--reporter spec
+--require test/helpers/chai
+--require test/helpers/babel-register
+--require babel-polyfill
+--check-leaks
+--recursive
+--compilers js:babel-core/register

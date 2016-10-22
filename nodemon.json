@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignore": ["src/*", "node_modules", ".git", "nlp"]
+}
