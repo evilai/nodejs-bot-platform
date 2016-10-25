@@ -17,7 +17,7 @@ What's implemented.
    * Newrelic
 
 ## Keys (important)
-#### Google Cloud
+### Google Cloud
 Be sure that you replaced keys in **/keys/** folder. To download json with keys:
    1. Go to [Google Console API manager](https://console.cloud.google.com/apis/dashboard) and check **credentials**.
    2. Click on the button _Create credentials_ -> _Service Account Key_ -> _JSON_.
@@ -26,7 +26,7 @@ Be sure that you replaced keys in **/keys/** folder. To download json with keys:
         * Datastore
         * Natural Language
 
-#### Other keys
+### Other keys
 Please, replace `app.yaml` and `app-dev.yaml` files and provide listed keys. If you use different environments (live/staging/dev), don't forget to specify different keys. Right now there are only two environments: _development_ and _production_.
 
 Example of `app.yaml` file:
@@ -71,22 +71,20 @@ It's almost the same, but **logging level** is different and you need to provide
 For building I use webpack. Please, notice that I have **aliases** for common libraries and files, that I use:
 * skill-cluster (pretty self explanatory, will discuss later)
 * config (please, keep only global configuration for the whole platform)
-* locales (library for supporting different locales)
 * logger (based on [Winston](https://github.com/winstonjs/winston))
-* rules
 
 You can find configuration at `/build/index.js`.
 
-#### How to build
+### How to build
 * ``npm run build:dev`` - build for development.
 * ``npm run build:dev:watch`` – build for development in watch mode.
 
 ## Start
-#### Package.json scripts
+### Package.json scripts
 * ``npm run start`` – run production environment with keys from `app.yaml`.
 * ``npm run start:dev`` – run development environment with keys from `app-dev.yaml`.
 
-#### Shell scripts
+### Shell scripts
 All shell scripts are used by _package.json_ scripts, so you don't need to run it explicitly.
 * _/tools/start/prod.sh_ – read variables from _app.yaml_ and starting builded bot in _/dist/bot.js_.
 * _/tools/start/dev.sh_ – read variables from _app-dev.yaml_ and starting builded bot in _/dist/bot.js_.
@@ -102,28 +100,18 @@ Please, check code and folders. I'll try to add README in all folders and leave 
 * In folder `/src/bot/platforms/` you should put unique, not reusable skills and clusters.
 
 ### Code
-I use [Express](http://expressjs.com/), so let's check routes. In the `index.js` file look at
+Please, check comments inside files. I use [Express](http://expressjs.com/).
 
-**/src/index.js**
-```js
-...
-// This is your bot's router
-import yourBotMessengerRouter from './bot/platforms/messenger/bot-name/router-builder';
+##### index.js
+In the [index.js](https://github.com/evilai/nodejs-bot-platform/blob/master/src/index.js) file look at `yourBotMessengerRouter` and `buildRoute` functions, that add new route to Express Router. This route should be used by webhooks (like FB Messenger) or device API.
 
-...
-// This route should be in the messenger webhook
-buildRoute(router, '/messenger/yourbot', yourBotMessengerRouter, {});
-```
-
-`'/messenger/yourbot'` here is a url, that you need to specify in your messenger webhooks. For example `https://yourbot.app.com/messenger/yourbot`.
-
-`buildRoute` just add provided routes to the router.
-
-`yourBotMessengerRouter` – is the most important part. There you can add or remove different services, that you want to use (for example, Google Storage, Memcached, Wit.ai and others) in your skills. Also you specify the initial Skills Cluster:
+* `'/messenger/yourbot'` – is a url, that you need to specify in your messenger webhooks. For example `https://yourbot.app.com/messenger/yourbot`.
+* `buildRoute` – just add provided routes to the Express Router.
+* `yourBotMessengerRouter` – is the most important part. There you can add or remove different services, that you want to use (for example, Google Storage, Memcached, Wit.ai and others) in your skills. Also you specify the initial Skills Cluster:
  
- **/bot/platforms/messenger/bot-name/router-builder.js**
- ```js
- ...
- req.bot.normalized.forEach(bot => co(skillsCluster(initContext(bot)))); // skillsCluster is a core cluster of skills 
- ...
- ```
+ ##### /bot/platforms/messenger/bot-name/router-builder.js
+ Check comments inside files. In [this file](https://github.com/evilai/nodejs-bot-platform/blob/master/src/bot/platforms/messenger/bot-name/router-builder.js) you should:
+ * add routes for web hooks;
+ * set up all services that can be used in skills;
+ * initialize request context, that can be passed between skills;
+ * and finally run initial Skills Cluster.

@@ -1,22 +1,14 @@
 import co from 'co';
 import { resolve } from 'path';
 import logger from 'logger';
-import createFBMessengerClient from 'nbp-adapter-fb-messenger';
-import createWitClient from 'nbp-adapter-wit';
-import createMemcachedClient from 'nbp-adapter-memcached';
-import createGoogleNaturalLanguageClient from 'nbp-adapter-google-natural-language';
-import createGoogleDatastoreClient from 'nbp-adapter-google-datastore';
+import createFBMessengerClient, { messengerTunneling } from 'nbp-adapter-fb-messenger';
+import createWitClient, { witTunneling } from 'nbp-adapter-wit';
+import createMemcachedClient, { memcachedTunneling } from 'nbp-adapter-memcached';
+import createGoogleNaturalLanguageClient, { googleLanguageTunneling } from 'nbp-adapter-google-natural-language';
+import createGoogleDatastoreClient, { googleDatastoreTunneling } from 'nbp-adapter-google-datastore';
 import locales from 'nbp-locales';
 import createRules from 'nbp-rules';
-
-import initializer from '../../../../platforms/messenger/initializer';
-import normalizer from '../../../../platforms/messenger/normalizer';
-
-import messenger from '../../../../tunnel/instant-messengers/messenger';
-import gstorage from '../../../../tunnel/storages/google-storage';
-import memcached from '../../../../tunnel/storages/memcached';
-import wit from '../../../../tunnel/artificial-intellegence/wit';
-import googleLanguage from '../../../../tunnel/artificial-intellegence/google/language';
+import normaliser from 'nbp-normaliser-fb-messenger';
 
 import skillsCluster from './skills/clusters/core';
 import vocabulary from './vocabulary';
@@ -39,7 +31,8 @@ const initContext = bot => ({
         // Decide if we should be silent (should we talk to user or no)
         silent: false,
 
-        // Method used to specify vocabulary for the current bot
+        // Method used to specify vocabulary for the current
+        // Please, look at skill <locales> in <core> cluster
         getLocales: locales(vocabulary)
     })
 });
@@ -48,37 +41,43 @@ export default function(router, route) {
 
     // POST used to recieve requests from IM
     router.post(route, [
-        initializer(PLATFORM),
-        normalizer,
-        gstorage(createGoogleDatastoreClient({
+        (req, res, next) => {
+            // Initialize an object inside request where we will collect all references to services and data, related to current request
+            req.bot = {
+                platform: PLATFORM
+            };
+
+            next();
+        },
+        normaliser,
+        googleDatastoreTunneling(createGoogleDatastoreClient({
             platform: PLATFORM,
             projectId: GOOGLE_PROJECT_ID,
             keyFilename: GOOGLE_PROJECT_KEYS_FILENAME,
             logger
         })),
-        memcached(createMemcachedClient({
+        memcachedTunneling(createMemcachedClient({
             platform: PLATFORM,
             address: MEMCACHED_ADDRESS,
             port: MEMCACHED_PORT,
             logger
         })),
-        wit(createWitClient({
+        witTunneling(createWitClient({
             token: APP_WIT_TOKEN,
             version: APP_WIT_VERSION,
             logger
         })),
-        googleLanguage(createGoogleNaturalLanguageClient({
+        googleLanguageTunneling(createGoogleNaturalLanguageClient({
             projectId: GOOGLE_PROJECT_ID,
             keyFilename: GOOGLE_PROJECT_KEYS_FILENAME,
             logger
         })),
-        messenger(createFBMessengerClient({
+        messengerTunneling(createFBMessengerClient({
             accessToken: FB_MESSENGER_ACCESS_TOKEN,
             logger
         })),
 
         (req, res) => {
-
             // Say to messenger, that we've got it's request
             res.status(200).send('ok');
 
