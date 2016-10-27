@@ -105,12 +105,12 @@ Please, check comments inside files. I use [Express](http://expressjs.com/).
 ##### index.js
 In the [index.js](https://github.com/evilai/nodejs-bot-platform/blob/master/src/index.js) file look at `yourBotMessengerRouter` and `buildRoute` functions, that add new route to Express Router. This route should be used by webhooks (like FB Messenger) or device API.
 
-* `'/messenger/yourbot'` – is a url, that you need to specify in your messenger webhooks. For example `https://yourbot.app.com/messenger/yourbot`.
-* `buildRoute` – just add provided routes to the Express Router.
-* `yourBotMessengerRouter` – is the most important part. There you can add or remove different services, that you want to use (for example, Google Storage, Memcached, Wit.ai and others) in your skills. Also you specify the initial Skills Cluster:
+ * `'/messenger/yourbot'` – is a url, that you need to specify in your messenger webhooks. For example `https://yourbot.app.com/messenger/yourbot`.
+ * `buildRoute` – just add provided routes to the Express Router.
+ * `yourBotMessengerRouter` – is the most important part. There you can add or remove different services, that you want to use (for example, Google Storage, Memcached, Wit.ai and others) in your skills. Also you specify the initial Skills Cluster:
  
- ##### /bot/platforms/messenger/bot-name/router-builder.js
- Check comments inside files. In [this file](https://github.com/evilai/nodejs-bot-platform/blob/master/src/bot/platforms/messenger/bot-name/router-builder.js) you should:
+##### /bot/platforms/messenger/bot-name/router-builder.js
+Check comments inside files. In [this file](https://github.com/evilai/nodejs-bot-platform/blob/master/src/bot/platforms/messenger/bot-name/router-builder.js) you should:
  * add routes for web hooks;
  * set up all services that can be used in skills;
  * initialize request context, that can be passed between skills;
