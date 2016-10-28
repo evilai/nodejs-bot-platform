@@ -5,13 +5,13 @@ import { KEY as USER_KEY } from '../../../../platforms/messenger/bot-name/skills
 
 export const SKILL_NAME = 'sarcaticGreet';
 
-export default function* (context) {
+export default function* (session) {
     logger.debug(SKILL_NAME.toUpperCase());
 
-    const { bot, rules } = context;
+    const { bot, rules } = session;
     const { first_name } = yield bot.memcached.get(USER_KEY);
 
     yield bot.im(rules).send(bot.locales(`${CLUSTER_NAME}.${SKILL_NAME}`, first_name));
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

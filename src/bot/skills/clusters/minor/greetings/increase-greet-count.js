@@ -3,10 +3,10 @@ import logger from 'logger';
 export const KEY = 'greetCount';
 export const SKILL_NAME = 'increaseGreetCount';
 
-export default function* (context) {
+export default function* (session) {
     logger.debug(SKILL_NAME.toUpperCase());
 
-    const { bot, rules } = context;
+    const { bot, rules } = session;
 
     if (!rules.get('silent')) {
         const greetCount = yield bot.memcached.get(KEY);
@@ -18,5 +18,5 @@ export default function* (context) {
         }
     }
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

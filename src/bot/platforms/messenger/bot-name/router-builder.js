@@ -23,8 +23,8 @@ const MEMCACHED_PORT = process.env.MEMCACHE_PORT_11211_TCP_PORT;
 const GOOGLE_PROJECT_ID = process.env.GOOGLE_PROJECT_ID;
 const GOOGLE_PROJECT_KEYS_FILENAME = process.env.GOOGLE_PROJECT_KEYS || resolve(__dirname, '../../../../../keys/google.json');
 
-// This context will be passed to all skills
-const initContext = bot => ({
+// This session will be passed to all skills
+const initSession = bot => ({
     bot,
     rules: createRules({
 
@@ -37,12 +37,14 @@ const initContext = bot => ({
     })
 });
 
+// Here we will build a session object, where we will store all tunneled services and functions
 export default function(router, route) {
 
     // POST used to recieve requests from IM
     router.post(route, [
         (req, res, next) => {
-            // Initialize an object inside request where we will collect all references to services and data, related to current request
+            // initialize an object inside request;
+            // here we will collect all references to services and data, related to current request
             req.bot = {
                 platform: PLATFORM
             };
@@ -81,7 +83,9 @@ export default function(router, route) {
             // Say to messenger, that we've got it's request
             res.status(200).send('ok');
 
-            req.bot.normalized.forEach(bot => co(skillsCluster(initContext(bot))));
+            // For each request we've got from client (for example, several messages),
+            // start initial skills cluster
+            req.bot.normalized.forEach(bot => co(skillsCluster(initSession(bot))));
         }
     ]);
 

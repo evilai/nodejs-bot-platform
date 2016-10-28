@@ -21,13 +21,13 @@ const skills = [
 
 cluster.plug(skills);
 
-export default function* (context) {
+export default function* (session) {
     logger.debug(`[ ${CLUSTER_NAME.toUpperCase()} ]`);
 
     return cluster
-        .buildDecisionTree(decisionTreeBuilder(context))
+        .buildDecisionTree(decisionTreeBuilder(session))
         .then(tree =>
             cluster
-                .traverse(tree, context)
+                .traverse(tree, session)
         );
 }

@@ -57,10 +57,10 @@ const getStateMachine = (resolve, greetCount = 0) => {
             });
 };
 
-export default function(context) {
+export default function(session) {
     logger.debug('Build decision tree');
 
-    const { bot } = context;
+    const { bot } = session;
 
     return function* () {
         // Here we get data from the Core cluster to pass it to the state machine

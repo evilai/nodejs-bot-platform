@@ -5,9 +5,9 @@ import getUser from './api';
 export const KEY = 'user';
 export const SKILL_NAME = 'user';
 
-export default function* (context) {
+export default function* (session) {
     logger.debug(SKILL_NAME.toUpperCase());
-    const { bot } = context;
+    const { bot } = session;
     const existingUser = yield bot.memcached.get(KEY);
 
     if (!existingUser) {
@@ -18,5 +18,5 @@ export default function* (context) {
         logger.debug(existingUser);
     }
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

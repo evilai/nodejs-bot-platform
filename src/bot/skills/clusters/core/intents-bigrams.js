@@ -12,8 +12,8 @@ const notRestrictedToBegin = token => !~RESTRICTED_IN_BIGRAMS.indexOf(token.part
 const getConnected = ({ tokens }, token) => tokens[token.dependencyEdge.headTokenIndex];
 const notUsed = (used, index) => !~used.indexOf(index);
 
-export default function* (context) {
-    const { bot } = context;
+export default function* (session) {
+    const { bot } = session;
 
     logger.debug(SKILL_NAME.toUpperCase());
 
@@ -41,5 +41,5 @@ export default function* (context) {
         logger.debug(`skipped, minimum words count for bigrams is ${MIN_WORDS_COUNT}`);
     }
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

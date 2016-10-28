@@ -3,8 +3,8 @@ import logger from 'logger';
 export const KEY = 'witIntents';
 export const SKILL_NAME = 'intents';
 
-export default function* (context) {
-    const { bot } = context;
+export default function* (session) {
+    const { bot } = session;
 
     logger.debug(SKILL_NAME.toUpperCase());
 
@@ -13,5 +13,5 @@ export default function* (context) {
 
     logger.debug(intent);
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

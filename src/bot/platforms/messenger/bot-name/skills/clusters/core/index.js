@@ -31,9 +31,9 @@ const skills = [
 
 cluster.plug(skills);
 
-export default function* (context) {
+export default function* (session) {
     logger.debug(`[ ${CLUSTER_NAME.toUpperCase()} ]`);
 
     // Here we know exactly the order of skills, so we don't need to build decision tree.
-    return cluster.traverse([SEEN_SKILL_NAME, TYPING_SKILL_NAME, USER_SKILL_NAME, CORE_CLUSTER_NAME], context);
+    return cluster.traverse([SEEN_SKILL_NAME, TYPING_SKILL_NAME, USER_SKILL_NAME, CORE_CLUSTER_NAME], session);
 }

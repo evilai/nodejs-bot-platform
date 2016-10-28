@@ -5,7 +5,6 @@ import union from 'lodash/union';
 
 import { extractIntents, extractIntentsBigrams } from 'libs/intent-extractor';
 
-import { CLUSTER_NAME } from './index';
 import { KEY as INTENTS_KEY } from '../core/intents';
 import { KEY as INTENTS_BIGRAMS_KEY } from '../core/intents-bigrams';
 

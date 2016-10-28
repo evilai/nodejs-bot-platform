@@ -3,10 +3,10 @@ import { KEY as GOOGLE_LANGUAGE_KEY } from './google-language';
 
 export const SKILL_NAME = 'locales';
 
-export default function* (context) {
+export default function* (session) {
     logger.debug(SKILL_NAME.toUpperCase());
 
-    const { bot, rules } = context;
+    const { bot, rules } = session;
     const { language } = yield bot.memcached.get(GOOGLE_LANGUAGE_KEY);
 
     if (!rules.get('getLocales')) {
@@ -18,5 +18,5 @@ export default function* (context) {
 
     logger.debug('Language setted to', language);
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

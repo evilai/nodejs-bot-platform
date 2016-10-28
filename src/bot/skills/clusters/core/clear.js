@@ -12,13 +12,13 @@ const SKILLS_TO_CLEAR = [
     INTENTS_BIGRAMS_KEY
 ];
 
-export default function* (context) {
-    const { bot, rules } = context;
+export default function* (session) {
+    const { bot, rules } = session;
 
     logger.debug(SKILL_NAME.toUpperCase());
     yield Promise.all(SKILLS_TO_CLEAR.map(skillName => bot.memcached.del(skillName)));
 
     logger.debug('cleared', SKILLS_TO_CLEAR);
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }

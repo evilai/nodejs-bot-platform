@@ -3,8 +3,8 @@ import logger from 'logger';
 export const SKILL_NAME = 'googleLanguage';
 export const KEY = 'languageAnnotated';
 
-export default function* (context) {
-    const { bot } = context;
+export default function* (session) {
+    const { bot } = session;
     logger.debug(SKILL_NAME.toUpperCase());
 
     const annotated = yield bot.googleLanguage.annotate(bot.message.text, {
@@ -20,5 +20,5 @@ export default function* (context) {
 
     logger.debug('Annotated', annotated);
 
-    return Promise.resolve(context);
+    return Promise.resolve(session);
 }
