@@ -4,7 +4,7 @@ import clusterCreate from 'skills-cluster';
 import seenSkill, { SKILL_NAME as SEEN_SKILL_NAME } from './seen';
 import typingSkill, { SKILL_NAME as TYPING_SKILL_NAME } from './typing';
 import userSkill, { SKILL_NAME as USER_SKILL_NAME } from './user';
-import coreCluster, { CLUSTER_NAME as CORE_CLUSTER_NAME } from '../../../../../../skills/clusters/core';
+import coreCluster, { CLUSTER_NAME as CORE_CLUSTER_NAME } from '../../../../../clusters/core';
 
 // Don't forget to export name, you should use it in decision tree builders
 export const CLUSTER_NAME = 'messengerCore';

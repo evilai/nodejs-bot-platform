@@ -10,7 +10,7 @@ import locales from 'nbp-locales';
 import createRules from 'nbp-rules';
 import normaliser from 'nbp-normaliser-fb-messenger';
 
-import skillsCluster from './skills/clusters/core';
+import skillsCluster from './clusters/core';
 import vocabulary from './vocabulary';
 
 const PLATFORM = 'your-platform';
